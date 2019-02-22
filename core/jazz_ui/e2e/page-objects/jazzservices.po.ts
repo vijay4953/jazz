@@ -106,7 +106,7 @@ export class Jazz {
     return element(by.xpath('//div[contains(text(),"successful")]'));
   }
   getAssetStatusVerify() {
-    return element(by.xpath('//div[contains(text(),"ACTIVE")]'));
+    return element(by.xpath('//div/div[1]/div[2]/div/div[2]/ul[1]/li[1]/div[2]'));
   }
   getLamdaName() {
     return element(by.xpath('//div[@class="table-row pointer"]/div[text()="function"]/preceding-sibling::div'));
@@ -249,7 +249,7 @@ export class Jazz {
   }
   serverResponse()
   {
-    return element(by.xpath('//tr[@class="response"]//td[@class="col response-col_status"][contains(text(),"200")]')); 
+    return element(by.xpath('//td[@class="col response-col_status"][contains(text(),"200")]')); 
   }
   goToFunction()
   {
@@ -334,6 +334,9 @@ export class Jazz {
   getDialogCommit() {
     return element(by.xpath('//button[@class=aui-button aui-button-primary commit-button"]'));
   }
+  
+  
+
   //gitlab locators
   drpGitBranchType() {
     return element(by.xpath('//a[@class="btn dropdown-toggle has-tooltip"]//i[@class="fa fa-caret-down"]'));
@@ -346,6 +349,13 @@ export class Jazz {
   }
   btnGitCreateBranch() {
     return element(by.xpath('//button[contains(text(),"Create branch")]'));
+  }
+
+  getSpinner() {
+    return element(by.css('div.loading-circle'));
+  }
+  getMetricsSpinner() {
+    return element(by.css('div.jz-spinner'));
   }
 
  }
