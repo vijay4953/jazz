@@ -58,11 +58,13 @@ describe('Overview', () => {
             return ele.isDisplayed()
             .then(
                   function (text) { 
+                        console.log("Element found"+text);
                         return text; 
                         
                   }, 
                   function (error) { 
                         browser.refresh();
+                        console.log("Element not found"+error);
                         return false; 
                   });
             }, 240 * 1000);
@@ -103,8 +105,8 @@ describe('Overview', () => {
             expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename);
             expect(jazzServices_po.getAPIType().getText()).toEqual('api');
             expect(jazzServices_po.getAPIStatus().getText()).toEqual('creation started');
-            fluentwaittry(jazzServices_po.serviceStatus(),20000);
-            expect(jazzServices_po.getAPIStatus().getText()).toEqual('active');
+            fluentwaittry(jazzServices_po.serviceStatus(),60000);
+            expect(jazzServices_po.serviceStatus().getText()).toEqual('active');
       });
 
       it('Verify API Service and Navigation', () => {
@@ -197,8 +199,8 @@ describe('Overview', () => {
             expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename);
             expect(jazzServices_po.getFunctionType().getText()).toEqual('function');
             expect(jazzServices_po.getFunctionStatus().getText()).toEqual('creation started');
-            fluentwaittry(jazzServices_po.serviceStatus(),10000);
-            expect(jazzServices_po.getFunctionStatus().getText()).toEqual('active');
+            fluentwaittry(jazzServices_po.serviceStatus(),60000);
+            expect(jazzServices_po.serviceStatus().getText()).toEqual('active');
       });
       
       it('Verify Function', () => {
@@ -288,8 +290,8 @@ describe('Overview', () => {
             expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename);
             expect(jazzServices_po.getWebsiteType().getText()).toEqual('website');
             expect(jazzServices_po.getWebsiteStatus().getText()).toEqual('creation started');
-            fluentwaittry(jazzServices_po.serviceStatus(),10000);
-            expect(jazzServices_po.getWebsiteStatus().getText()).toEqual('active');
+            fluentwaittry(jazzServices_po.serviceStatus(),60000);
+            expect(jazzServices_po.serviceStatus().getText()).toEqual('active');
       });
 
       it('Verify Webpage Title', () => {
@@ -333,8 +335,7 @@ describe('Overview', () => {
             fluentwaittry(jazzServices_po.getServiceFromAsset(),5000);
             jazzServices_po.getServiceFromAsset().click();
       });
-
-      
+    
 });
 
 
