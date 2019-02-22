@@ -107,7 +107,7 @@ describe('Overview', () => {
             expect(jazzServices_po.getAPIStatus().getText()).toEqual('active');
       });
 
-      it('Verify API Service and Navigation', () => {
+      xit('Verify API Service and Navigation', () => {
             browser.driver.sleep(2000);
             fluentwaittry(jazzServices_po.getAwsServiceName(),5000);           
             browser.wait(EC.elementToBeClickable(jazzServices_po.getAwsServiceName()), timeOutHigh);
@@ -128,7 +128,7 @@ describe('Overview', () => {
             browser.driver.switchTo().activeElement();
       });
 
-      it('Verify API Deployments' , () => {
+      xit('Verify API Deployments' , () => {
             browser.driver.sleep(2000);
             refreshbutton(jazzServices_po.getDeploymentStatus(),5000);
             jazzServices_po.getDeploymentStatus().click();
@@ -138,7 +138,7 @@ describe('Overview', () => {
             expect(jazzServices_po.getDeploymentStatusVerify().getText()).toEqual('Successful');
       });
 
-      it('Verify API Asset' ,  () => {
+      xit('Verify API Asset' ,  () => {
             browser.driver.sleep(2000);
             refreshbutton(jazzServices_po.getAsset(),5000);
             //To get the Asset Tab
@@ -150,7 +150,7 @@ describe('Overview', () => {
             refreshbutton(jazzServices_po.getAssetHeader(),5000);
       });
 
-      it('Verify API Logs' ,  () => {
+      xit('Verify API Logs' ,  () => {
             refreshbutton(jazzServices_po.getLogs(),5000);
             jazzServices_po.getLogs().click();
             refreshbutton(jazzServices_po.getFilterIcon(),5000);
@@ -194,12 +194,10 @@ describe('Overview', () => {
             serviceapprover();
             browser.driver.sleep(15000);
             //Verifying the Lambda is correct
-            expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename);
+            fluentwaittry(expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename),5000);
             expect(jazzServices_po.getFunctionType().getText()).toEqual('function');
             expect(jazzServices_po.getFunctionStatus().getText()).toEqual('creation started');
-            // browser.driver.sleep(100000);
-            fluentwaittry(jazzServices_po.serviceStatus(),20000);
-            // browser.wait(EC.visibilityOf(jazzServices_po.serviceStatus()), timeOutHigh);
+            fluentwaittry(jazzServices_po.serviceStatus(),10000);
             expect(jazzServices_po.getFunctionStatus().getText()).toEqual('active');
       });
       
@@ -290,7 +288,7 @@ describe('Overview', () => {
             expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename);
             expect(jazzServices_po.getWebsiteType().getText()).toEqual('website');
             expect(jazzServices_po.getWebsiteStatus().getText()).toEqual('creation started');
-            fluentwaittry(jazzServices_po.serviceStatus(),20000);
+            fluentwaittry(jazzServices_po.serviceStatus(),10000);
             expect(jazzServices_po.getWebsiteStatus().getText()).toEqual('active');
       });
 
