@@ -107,7 +107,7 @@ describe('Overview', () => {
             expect(jazzServices_po.getAPIStatus().getText()).toEqual('active');
       });
 
-      xit('Verify API Service and Navigation', () => {
+      it('Verify API Service and Navigation', () => {
             browser.driver.sleep(2000);
             fluentwaittry(jazzServices_po.getAwsServiceName(),5000);           
             browser.wait(EC.elementToBeClickable(jazzServices_po.getAwsServiceName()), timeOutHigh);
@@ -128,7 +128,7 @@ describe('Overview', () => {
             browser.driver.switchTo().activeElement();
       });
 
-      xit('Verify API Deployments' , () => {
+      it('Verify API Deployments' , () => {
             browser.driver.sleep(2000);
             refreshbutton(jazzServices_po.getDeploymentStatus(),5000);
             jazzServices_po.getDeploymentStatus().click();
@@ -138,7 +138,7 @@ describe('Overview', () => {
             expect(jazzServices_po.getDeploymentStatusVerify().getText()).toEqual('Successful');
       });
 
-      xit('Verify API Asset' ,  () => {
+      it('Verify API Asset' ,  () => {
             browser.driver.sleep(2000);
             refreshbutton(jazzServices_po.getAsset(),5000);
             //To get the Asset Tab
@@ -150,7 +150,7 @@ describe('Overview', () => {
             refreshbutton(jazzServices_po.getAssetHeader(),5000);
       });
 
-      xit('Verify API Logs' ,  () => {
+      it('Verify API Logs' ,  () => {
             refreshbutton(jazzServices_po.getLogs(),5000);
             jazzServices_po.getLogs().click();
             refreshbutton(jazzServices_po.getFilterIcon(),5000);
@@ -194,7 +194,7 @@ describe('Overview', () => {
             serviceapprover();
             browser.driver.sleep(15000);
             //Verifying the Lambda is correct
-            fluentwaittry(expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename),5000);
+            expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename);
             expect(jazzServices_po.getFunctionType().getText()).toEqual('function');
             expect(jazzServices_po.getFunctionStatus().getText()).toEqual('creation started');
             fluentwaittry(jazzServices_po.serviceStatus(),10000);
