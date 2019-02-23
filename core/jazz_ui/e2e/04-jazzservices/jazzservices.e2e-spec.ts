@@ -42,7 +42,7 @@ describe('Overview', () => {
       function serviceapprover() {
             browser.driver.sleep(5000);
             jazzServices_po.getSubmit().click();
-            fluentwaittry(jazzServices_po.getDone(),10000);
+            //fluentwaittry(jazzServices_po.getDone(),10000);
             jazzServices_po.getDone().click();
       }
       function waitForSpinnerDisappear(){    
