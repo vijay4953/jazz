@@ -265,7 +265,7 @@ describe('Overview', () => {
             jazzServices_po.getDropDown().click();
             jazzServices_po.getYear().click();
             expect(jazzServices_po.getYearVerify().getText()).toEqual('YEAR');
-            fluentwaittry(jazzServices_po.getServiceFromAsset(),5000);
+            browser.driver.sleep(2000);
             jazzServices_po.getServiceFromAsset().click();
       });
 
