@@ -22,6 +22,7 @@ exports.config = {
   capabilities: {
     'browserName': 'chrome',
     'chromeOptions': {
+      volumes: [ '-/dev/shm:/dev/shm'],
       
       // Get rid of --ignore-certificate yellow warning
       args: ['--headless', '--disable-gpu', '--no-sandbox', '--test-type=browser', '--disable-dev-shm-usage'],
@@ -36,6 +37,8 @@ exports.config = {
       }
     }
   },
+
+
   
   directConnect: false,
   baseUrl: 'http://localhost:4200/',
@@ -46,6 +49,8 @@ exports.config = {
     defaultTimeoutInterval: 6000000,
     print: function() {}
   },
+ 
+
   onPrepare() {
     require('ts-node').register({
       project: 'e2e/tsconfig.e2e.json'
