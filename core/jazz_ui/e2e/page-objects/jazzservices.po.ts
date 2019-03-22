@@ -80,7 +80,7 @@ export class Jazz {
   }
   getProdName() {
     return element(by.xpath('//div[@class="stage-title stageDisp" and contains(text(),"prod")]'))
-	}
+  }
   getProdHeader() {
     return element(by.xpath('//div[@class="servie-details-container"]/h1[@class="page-hdr bold-title relative" and contains(text(),"prod")]'));
   }
@@ -90,17 +90,17 @@ export class Jazz {
   getAssetHeader() {
     return element(by.xpath('//div/div[2]/div/section[1]/div/div[2]/section/env-assets-section/div/div[1]/div[2]/div[1]/div[1]/span[2]'));
   }
-  getRefresh() { 
+  getRefresh() {
     return element(by.xpath('*//div[@class="refresh-button"]'));
   }
   getServiceFromAsset() {
     return element(by.xpath('//div[@class="navigation-item"]/span[@class="icon-icon-back hide"]/following-sibling::a[text()="Services"]'));
-  } 
+  }
   getWebsiteName() {
-    return element(by.xpath('//div[@class="table-row pointer"]/div[text()="website"]/preceding-sibling::div'));  
+    return element(by.xpath('//div[@class="table-row pointer"]/div[text()="website"]/preceding-sibling::div'));
   }
   getDeploymentStatus() {
-    return element(by.xpath('//li[@class="x caps" and contains(text(),"deployments")]'));  
+    return element(by.xpath('//li[@class="x caps" and contains(text(),"deployments")]'));
   }
   getDeploymentStatusVerify() {
     return element(by.xpath('//div[contains(text(),"successful")]'));
@@ -112,7 +112,7 @@ export class Jazz {
     return element(by.xpath('//div[@class="table-row pointer"]/div[text()="function"]/preceding-sibling::div'));
   }
   getOverviewStatus() {
-    return element(by.xpath('//li[@class="x caps active" and contains(text(),"overview")]'));  
+    return element(by.xpath('//li[@class="x caps active" and contains(text(),"overview")]'));
   }
   getLogs() {
     return element(by.xpath('//li[@class="x caps" and contains(text(),"logs")]'));
@@ -148,7 +148,7 @@ export class Jazz {
     return element(by.xpath('//span[@title="Refresh"]'));
   }
   serviceStatus() {
-      return element(by.xpath('//div[@class="table-body"]//div[2]//div[contains(text(),"active")]'));
+    return element(by.xpath('//div[@class="table-body"]//div[2]//div[contains(text(),"active")]'));
   }
   getMetrices() {
     return element(by.xpath('//li[contains(text(),"metrics")]'));
@@ -157,10 +157,10 @@ export class Jazz {
     return element(by.xpath('//button[text()="TEST API"]'));
   }
   getAPIGET() {
-    return element(by.xpath('//span[contains(text(),"GET")]'));
+    return element(by.xpath('//span[@class="opblock-summary-method"][contains(text(),"GET")]'));
   }
   getAPIPOST() {
-    return element(by.xpath('//span[contains(text(),"POST")]'));
+    return element(by.xpath('//span[@class="opblock-summary-method"][contains(text(),"POST")]'));
   }
   getTryOut() {
     return element(by.xpath('//button[@class="btn try-out__btn"]'));
@@ -177,91 +177,77 @@ export class Jazz {
   getMetricesCount() {
     return element(by.xpath('//div[@class="metrics-footer"][contains(text(),"Count")]/preceding-sibling::div[@class="metrics-card-content"]'));
   }
-  getXXError(){
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(1)')); 
+  getXXError() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(1)'));
   }
-  getXXErrorFive(){
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(2)'));    
+  getXXErrorFive() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(2)'));
   }
-  getCacheHitCount()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(3)'));  
+  getCacheHitCount() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(3)'));
   }
-  getCacheMissCount()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(4)'));  
+  getCacheMissCount() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(4)'));
   }
-  getCount()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(5)')); 
+  getCount() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(5)'));
   }
-  getIntegrationLatency()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(6)')); 
-  } 
-  getLatency()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(7)'));    
+  getIntegrationLatency() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(6)'));
+  }
+  getLatency() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(7)'));
   }
   getTestFunction() {
     return element(by.xpath('//btn-jazz-secondary[@class="testApiBtn"]/button[text()="TEST FUNCTION"]'));
-   }
-   getTestArea() {
-     return element(by.xpath('//textarea[contains(@class,"input-textarea")]')); 
-   }  
-   getTestButton() {
-     return element(by.xpath('//div/button[@class="btn-round primary start-button"]'));
-   }
-   getClose() {
-     return element(by.xpath('//div[@class="sidebar-frame"]//div[@class="icon-icon-close pointer"]'));
-   }
-   getInvocations(){
-     return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(1)')); 
-   }
-   getWebsiteLink(){
-     return element(by.xpath('//btn-jazz-secondary[@class="testApiBtn"]/button[text()="GO TO WEBSITE"]'));
-   }
-   getMetricsChildOne(){
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(1)')); 
   }
-  getMetricsChildTwo(){
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(2)')); 
+  getTestArea() {
+    return element(by.xpath('//textarea[contains(@class,"input-textarea")]'));
   }
-  getMetricsChildThree()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(3)'));  
+  getTestButton() {
+    return element(by.xpath('//div/button[@class="btn-round primary start-button"]'));
   }
-  getMetricsChildFour()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(4)'));  
+  getClose() {
+    return element(by.xpath('//div[@class="sidebar-frame"]//div[@class="icon-icon-close pointer"]'));
   }
-  getMetricsChildFive()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(5)')); 
+  getInvocations() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(1)'));
   }
-  getMetricsChildSix()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(6)')); 
-  }	
-  getMetricsChildSeven()
-  {
-    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(7)')); 
+  getWebsiteLink() {
+    return element(by.xpath('//btn-jazz-secondary[@class="testApiBtn"]/button[text()="GO TO WEBSITE"]'));
   }
-  serverResponse()
-  {
-    return element(by.xpath('//td[@class="col response-col_status"][contains(text(),"200")]')); 
+  getMetricsChildOne() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(1)'));
   }
-  goToFunction()
-  {
-    return element(by.xpath('//button[@class="btnT-radial-in"]')); 
+  getMetricsChildTwo() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(2)'));
   }
-  testSuccessMessage()
-  {
-    return element(by.xpath('//span[contains(text(),"Function got triggered successfully")]')); 
+  getMetricsChildThree() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(3)'));
   }
-  websiteTemplete()
-  {
-    return element(by.xpath('//p[contains(text(),"Jazz Serverless Platform Website Template")]')); 
+  getMetricsChildFour() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(4)'));
+  }
+  getMetricsChildFive() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(5)'));
+  }
+  getMetricsChildSix() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(6)'));
+  }
+  getMetricsChildSeven() {
+    return element(by.css('div.metrics-carousel-scroller>div.metrics-card:nth-child(7)'));
+  }
+  serverResponse() {
+    return element(by.xpath('//td[@class="col response-col_status"][contains(text(),"200")]'));
+  }
+  goToFunction() {
+    return element(by.xpath('//button[@class="btnT-radial-in"]'));
+  }
+  testSuccessMessage() {
+    return element(by.xpath('//span[contains(text(),"Function got triggered successfully")]'));
+  }
+  websiteTemplete() {
+    return element(by.xpath('//p[contains(text(),"Jazz Serverless Platform Website Template")]'));
   }
   getMetricesRequestCount() {
     return element(by.xpath('//div[contains(text(),"10")]'));
@@ -270,9 +256,15 @@ export class Jazz {
   getRepository() {
     return element(by.xpath('//div[contains(@class,"det-value repository-link link PlaceHolder")]'));
   }
-// bitbucket locators
+  // bitbucket locators
+  getEnvironmentBit() {
+    return element(by.xpath('//span[contains(text(), "Bitbucket")]'));
+  }
+  getEnvironmentGit() {
+    return element(by.xpath('//div/div[2]/div[1]/h1[contains(text(),"GitLab Community Edition")]'));
+  }
   bitbucketLogo() {
-  return element(by.xpath('//span[@class="aui-header-logo-device"]'));
+    return element(by.xpath('//span[@class="aui-header-logo-device"]'));
   }
   createBranch() {
     return element(by.xpath('//span[@class="aui-icon icon-create-branch"]'));
@@ -300,6 +292,9 @@ export class Jazz {
   }
   testBranch() {
     return element(by.xpath('//div[@class="eachBranch col-md-2 col-sm-5"]//div//div[@class="overview-value"]'));
+  }
+  activeTestBranch() {
+    return element(by.xpath('//div[2]/span[@title="deployment completed"]'));
   }
   getTestBranch() {
     return element(by.xpath('//div[@class="eachBranch col-md-2 col-sm-5"]//div//div[@class="overview-value"]'));
@@ -334,10 +329,16 @@ export class Jazz {
   getDialogCommit() {
     return element(by.xpath('//button[@class=aui-button aui-button-primary commit-button"]'));
   }
-  
-  
-
   //gitlab locators
+  gitUsername() {
+    return element(by.xpath('//*[@id="user_login"]'));
+  }
+  gitPassword() {
+    return element(by.xpath('//*[@id="user_password"]'));
+  }
+  gitLogin() {
+    return element(by.xpath('//input[@value="Sign in"]'));
+  }
   drpGitBranchType() {
     return element(by.xpath('//a[@class="btn dropdown-toggle has-tooltip"]//i[@class="fa fa-caret-down"]'));
   }
@@ -350,7 +351,18 @@ export class Jazz {
   btnGitCreateBranch() {
     return element(by.xpath('//button[contains(text(),"Create branch")]'));
   }
-
+  gitIndexFile() {
+    return element(by.xpath('//span[contains(text(),"index.js")]'));
+  }
+  gitEditIndexFile() {
+    return element(by.xpath('//a[contains(text(),"Edit")]'));
+  }
+  removeLineFirst() {
+    return element(by.xpath('//*[@id="editor"]/div[2]/div'));
+  }
+  gitComitChanges() {
+    return element(by.xpath('//button[contains(text(),"Commit changes:)]'));
+  }
   getSpinner() {
     return element(by.css('div.loading-circle'));
   }
@@ -358,4 +370,4 @@ export class Jazz {
     return element(by.css('div.jz-spinner'));
   }
 
- }
+}
