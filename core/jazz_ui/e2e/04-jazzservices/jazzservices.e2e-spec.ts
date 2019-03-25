@@ -486,8 +486,8 @@ describe('Overview', () => {
     browser.driver.sleep(5000);
     //Creating the Lambda
     jazzServices_po.getLambda().click();
-    var min = 111111111;
-    var max = 999999999;
+    var min = 11;
+    var max = 99;
     var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
     servicename = 'servicename' + randomNum;
     createservice(servicename);
@@ -631,7 +631,7 @@ describe('Overview', () => {
     jazzServices_po.getServiceFromAsset().click();
   });
 
-  xit('Identifying Environment and Navigation for Lambda', () => {
+  it('Identifying Environment and Navigation for Lambda', () => {
     browser.driver.sleep(2000);
     fluentwaittry(jazzServices_po.getAwsServiceName(), 5000);
     browser.wait(EC.elementToBeClickable(jazzServices_po.getAwsServiceName()), timeOutHigh);
@@ -642,16 +642,16 @@ describe('Overview', () => {
     browser.sleep(5000);
 
   });
-  xit('Create the Test Branch for Lambda', () => {
+  it('Create the Test Branch for Lambda', () => {
     browser.getAllWindowHandles().then(function (handles) {
       browser.switchTo().window(handles[1]).then(function () {
         browser.sleep(2000);
 
         browser.getTitle().then(function (webpagetitle) {
           if (webpagetitle === 'Sign in · GitLab') {
-            jazzServices_po.gitUsername().sendKeys(config.SCM_USERNAME);
-            jazzServices_po.gitPassword().sendKeys(config.SCM_PASSWORD);
-            jazzServices_po.gitLogin().click();
+            // jazzServices_po.gitUsername().sendKeys(config.SCM_USERNAME);
+            // jazzServices_po.gitPassword().sendKeys(config.SCM_PASSWORD);
+            // jazzServices_po.gitLogin().click();
             browser.wait(EC.visibilityOf(jazzServices_po.drpGitBranchType()), timeOutHigh);
             jazzServices_po.drpGitBranchType().click();
             jazzServices_po.selectGitBranchType().click();
@@ -677,9 +677,9 @@ describe('Overview', () => {
             browser.close();
           }
           else {
-            jazzServices_po.bitUsername().sendKeys(config.SCM_USERNAME);
-            jazzServices_po.bitPassword().sendKeys(config.SCM_PASSWORD);
-            jazzServices_po.bitLogin().click();
+            // jazzServices_po.bitUsername().sendKeys(config.SCM_USERNAME);
+            // jazzServices_po.bitPassword().sendKeys(config.SCM_PASSWORD);
+            // jazzServices_po.bitLogin().click();
             browser.wait(EC.visibilityOf(jazzServices_po.createBranch()), timeOutHigh);
             jazzServices_po.createBranch().click();
             jazzServices_po.drp_BranchType().click();
@@ -709,7 +709,7 @@ describe('Overview', () => {
       });
     });
   });
-  xit('Verify METRICS Navigation for Lambda for Test Branch', () => {
+  it('Verify METRICS Navigation for Lambda for Test Branch', () => {
     browser.sleep(2000);
     browser.driver.switchTo().activeElement();
     refreshbutton(jazzServices_po.getMetrices(), 5000);
@@ -736,7 +736,7 @@ describe('Overview', () => {
     waitForSpinnerDisappear();
   });
 
-  xit('Verify Lambda Deployments for Test Branch', () => {
+  it('Verify Lambda Deployments for Test Branch', () => {
     refreshbutton(jazzServices_po.getDeploymentStatus(), 5000);
     jazzServices_po.getDeploymentStatus().click();
     waitForSpinnerDisappear();
@@ -745,7 +745,7 @@ describe('Overview', () => {
     expect(jazzServices_po.getDeploymentStatusVerify().getText()).toEqual('Successful');
   });
 
-  xit('Verify Lambda Asset for Test Branch', () => {
+  it('Verify Lambda Asset for Test Branch', () => {
     refreshbutton(jazzServices_po.getAsset(), 5000);
     //To get the Asset Tab
     jazzServices_po.getAsset().click();
@@ -757,7 +757,7 @@ describe('Overview', () => {
     refreshbutton(jazzServices_po.getServiceFromAsset(), 5000);
   });
 
-  xit('Verify Lambda Logs for Test Branch', () => {
+  it('Verify Lambda Logs for Test Branch', () => {
     refreshbutton(jazzServices_po.getLogs(), 5000);
     jazzServices_po.getLogs().click();
     refreshbutton(jazzServices_po.getFilterIcon(), 5000);
@@ -779,7 +779,7 @@ describe('Overview', () => {
     jazzServices_po.getYear().click();
     expect(jazzServices_po.getYearVerify().getText()).toEqual('YEAR');
   });
-  xit('Verify METRICS COUNT for Lambda in Test Branch', () => {
+  it('Verify METRICS COUNT for Lambda in Test Branch', () => {
     browser.sleep(2000);
     refreshbutton(jazzServices_po.getMetrices(), 5000);
     jazzServices_po.getMetrices().click();
