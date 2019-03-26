@@ -365,13 +365,24 @@ export class Jazz {
   gitComitChanges() {
     return element(by.xpath('//button[contains(text(),"Commit changes:)]'));
   }
-  
+  getRepo() {
+    return element(by.xpath('//div[contains(text(),"Repository")]'));
+  }
+  getTestBranchName() {
+    return element(by.xpath('//div[@class="stage-title2 stageDisp"]'));
+  }
 
   getSpinner() {
     return element(by.css('div.loading-circle'));
   }
   getMetricsSpinner() {
     return element(by.css('div.jz-spinner'));
+  }
+  getBitLogoutIcon() {
+    return element(by.xpath('//span[@id="current-user"]//span[@class="aui-avatar-inner"]'));
+  }
+  getBitLogout() {
+    return element(by.xpath('//a[@class="logout-link"]'));
   }
 
 }
