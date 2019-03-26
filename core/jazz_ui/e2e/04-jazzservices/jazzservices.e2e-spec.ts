@@ -109,7 +109,7 @@ describe('Overview', () => {
     servicename = 'servicename' + randomNum;
     createservice(servicename);
     serviceapprover();
-    browser.driver.sleep(tenk);
+    browser.driver.sleep(fifteenk);
     //Assert-Verifying the created service,Type and Status of the API
     expect(jazzServices_po.getAwsServiceName().getText()).toEqual(servicename);
     fluentwaittry(jazzServices_po.getAPIType(), fivek);
