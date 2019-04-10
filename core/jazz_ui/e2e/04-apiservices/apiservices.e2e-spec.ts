@@ -222,7 +222,6 @@ describe('Overview', () => {
               browser.wait(EC.elementToBeClickable(jazzServices_po.btnGitCreateBranch()), timeOutHigh);
               jazzServices_po.btnGitCreateBranch().click();
               browser.sleep(tenk);
-              console.log("test branch creation done");
               browser.navigate().refresh();
               browser.sleep(twok);
               jazzServices_po.getGitLogoutIcon().click();

@@ -23,7 +23,7 @@ export class Register {
    return element(by.css('div.login'));
   }
   getRegister(){
-    return element(by.css('div.newUser1'));
+    return element(by.css('div.newUser'));
   }
   getBackToLogin()
   {
