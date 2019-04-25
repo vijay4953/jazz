@@ -148,7 +148,7 @@ export class Jazz {
     return element(by.xpath('//span[@title="Refresh"]'));
   }
   serviceStatus(servicename) {
-    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[contains(text(), "active")]'));
+    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[contains(text(), "active1")]'));
   }
   getMetrices() {
     return element(by.xpath('//li[contains(text(),"metrics")]'));
