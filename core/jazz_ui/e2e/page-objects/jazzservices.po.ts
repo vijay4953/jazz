@@ -49,22 +49,22 @@ export class Jazz {
     return element(by.xpath('(//table-template//div[@class="table-row pointer"]/div)[1]'));
   }
   getAPIType(servicename) {
-    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="' + servicename + '"]/parent::div/div[2]'));
+    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[2]'));
   }
   getFunctionType(servicename) {
-    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="' + servicename + '"]/parent::div/div[2]'));
+    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[2]'));
   }
   getWebsiteType(servicename) {
-    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="' + servicename + '"]/parent::div/div[2]'));
+    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[2]'));
   }
   getAPIStatus(servicename) {
-    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="' + servicename + '"]/parent::div/div[5]'));
+    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[5]'));
   }
   getFunctionStatus(servicename) {
-    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="' + servicename + '"]/parent::div/div[5]'));
+    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[5]'));
   }
   getWebsiteStatus(servicename) {
-    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="' + servicename + '"]/parent::div/div[5]'));
+    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[5]'));
   }
   getDummy() {
     return element(by.xpath('//*[@id="exampleName"]'));
@@ -93,7 +93,7 @@ export class Jazz {
   getRefresh() {
     return element(by.xpath('*//div[@class="refresh-button"]'));
   }
-  getServiceFromAsset() {
+  getServiceHomePage() {
     return element(by.xpath('//div[@class="navigation-item"]/span[@class="icon-icon-back hide"]/following-sibling::a[text()="Services"]'));
   }
   getWebsiteName() {
@@ -148,7 +148,7 @@ export class Jazz {
     return element(by.xpath('//span[@title="Refresh"]'));
   }
   serviceStatus(servicename) {
-    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="' + servicename + '"]/parent::div/div[contains(text(), "active")]'));
+    return element(by.xpath('//div/div[@class="table-row pointer"]/div[text()="'+servicename+'"]/parent::div/div[contains(text(), "active")]'));
   }
   getMetrices() {
     return element(by.xpath('//li[contains(text(),"metrics")]'));
@@ -244,7 +244,7 @@ export class Jazz {
     return element(by.xpath('//button[@class="btnT-radial-in"]'));
   }
   testSuccessMessage() {
-    return element(by.xpath('//span[contains(text(),"Function got triggered successfully")]'));
+    return element(by.css('div.column-heading.success > span:nth-child(2)'));
   }
   websiteTemplete() {
     return element(by.xpath('//p[contains(text(),"Jazz Serverless Platform Website Template")]'));
@@ -371,7 +371,10 @@ export class Jazz {
   getTestBranchName() {
     return element(by.xpath('//div[@class="stage-title2 stageDisp"]'));
   }
-
+  getLoginSpinner()
+  {
+    return element(by.css('div.loader'));
+  }
   getSpinner() {
     return element(by.css('div.loading-circle'));
   }
@@ -390,8 +393,20 @@ export class Jazz {
   getGitLogout() {
     return element(by.xpath('//a[@class="sign-out-link"]'));
   }
-  getService(servicename) {
-    return element(by.xpath('(//table-template//div[@class="table-row pointer"]/div)[contains(text(),"' + servicename + '")]'));
+  getService(servicename) { 
+    return element(by.xpath('(//table-template//div[@class="table-row pointer"]/div)[contains(text(),"'+servicename+'")]'));  
+    }
+  SwaggerFailed(){
+    return element(by.xpath('//*[@class="errors__title"]'));  
+    }
+  logoutIcon() {
+    return element(by.xpath('//jazz-header/header/div[2]/div[2]/ul/li[2]/div/div/div[1]'));
+  }
+  logout() {
+    return element(by.xpath('//div[contains(text(),"Logout")]'));
+  }
+  testError() {
+    return element(by.xpath('//*[@id="main-message"]/h1/span'));  
   }
 
 }

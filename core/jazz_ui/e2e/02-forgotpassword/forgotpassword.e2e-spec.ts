@@ -25,7 +25,7 @@ describe('forgotpassword', () => {
       forgotpassword_po = new ForgotPassword();
     });
 
-    it('forgotpassword', () => {
+    xit('forgotpassword', () => {
       browser.refresh();
       browser.driver.switchTo().activeElement();
       forgotpassword_po.getLoginPassButton().click();
