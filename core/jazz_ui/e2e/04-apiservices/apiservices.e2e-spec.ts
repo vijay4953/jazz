@@ -109,6 +109,14 @@ describe('Overview', () => {
               return false;
             });
         }, 240 * 1000);
+        
+       jazzServices_po.serviceStatus(servicename).getText().then(function(value){
+        if ( value === 'active'){
+          flag = 0;
+          expect(jazzServices_po.serviceStatus(servicename).getText()).toEqual('creation started');
+        }
+       });
+       
   });
 
   it('Verify API Service and Navigation', () => {
