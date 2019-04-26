@@ -53,7 +53,7 @@ describe('register', () => {
       register_po.getBackToLogin().click();
     });
 
-    xit('register', () => {
+    it('register', () => {
       browser.refresh();
       browser.driver.switchTo().activeElement();
       register_po.getLoginButton().click();

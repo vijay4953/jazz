@@ -186,7 +186,9 @@ describe('Overview', () => {
             browser.close();
           }
         });
+        browser.sleep(fivek);
         browser.close();
+
     });
       browser.switchTo().window(handles[0]).then(function () {
         browser.sleep(fivek);
@@ -216,19 +218,19 @@ describe('Overview', () => {
       commonUtils.fluentwaittry(jazzServices_po.getMetrices(), tenk);
       jazzServices_po.getMetrices().click();
       commonUtils.waitForMetricsSpinner();
-      // let value = commonUtils.refreshbutton(jazzServices_po.getMetricesCount(), thirtyk);
+      commonUtils.refreshbutton(jazzServices_po.getMetricesCount(), thirtyk);
       // if(value == true){
       //   found = 1;
       // }
       // else{
       //   found = 0;
-      // }
-      jazzServices_po.getMetricesCount().isDisplayed().then(null, function(err){
-          browser.sleep(twentyk);
-          commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), fivek);
-          jazzServices_po.getServiceHomePage().click();
-          throw new Error("Failed Metrics Count");
-        });
+      //}
+      // jazzServices_po.getMetricesCount().isDisplayed().then(null, function(err){
+      //     browser.sleep(twentyk);
+      //     commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), fivek);
+      //     jazzServices_po.getServiceHomePage().click();
+      //     throw new Error("Failed Metrics Count");
+      //   });
 
       expect(jazzServices_po.getMetricesCount().getText()).toEqual('1');
       browser.driver.switchTo().activeElement();
@@ -320,22 +322,7 @@ describe('Overview', () => {
         });
         browser.switchTo().window(handles[0]).then(function () {
           browser.sleep(twok);
-          //commonUtils.waitforservice(jazzServices_po.activeTestBranch(), fifteenk);
-          browser.wait(function () {
-            browser.sleep(sixtyk);
-            return jazzServices_po.activeTestBranch().isDisplayed()
-              .then(
-                function (text) {
-                  flag=1;
-                  return text;
-                },
-                function (error) {
-                  browser.refresh();
-                  flag=0;
-                  return false;
-                });
-            }, 240 * 1000);
-
+          commonUtils.waitforservice(jazzServices_po.activeTestBranch(), fifteenk);
           jazzServices_po.activeTestBranch().click().
             then(null, function (err) {
             console.log("the error occurred is : " + err.name);
@@ -353,51 +340,54 @@ describe('Overview', () => {
       jazzServices_po.getTestAPI().click();
       browser.getAllWindowHandles().then(function (handles) {
         browser.switchTo().window(handles[1]).then(function () {
-          browser.driver.sleep(fivek);
-
-          jazzServices_po.getAPIGET().click().then(null, function(err){
-            console.log("the error occurred is : "+ err.name);
-            browser.sleep(fivek);
-          });    
-          
-          jazzServices_po.getTryOut().click().then(null, function(err){
-            console.log("the error occurred is : "+ err.name);
-          });
-  
-          jazzServices_po.getStringA().sendKeys('Testing').then(null, function(err){
-            console.log("the error occurred is : "+ err.name);
-          });
-          jazzServices_po.getStringB().sendKeys('Jazz').then(null, function(err){
-            console.log("the error occurred is : "+ err.name);
-          });
-  
-          jazzServices_po.getExecute().click().then(null, function(err){
-            console.log("the error occurred is : "+ err.name);
-          });
-  
-          jazzServices_po.getAPIGET().click().then(null, function(err){
-            console.log("the error occurred is : "+ err.name);
-          });
-          jazzServices_po.getAPIPOST().click().then(null, function(err){
-            console.log("the error occurred is : "+ err.name);
-          });
-          jazzServices_po.getTryOut().click().then(null, function(err){
-            console.log("the error occurred is : "+ err.name);
-          });
-          jazzServices_po.getExecute().click().then(null, function(err){
-            console.log(err.name);
-              if (jazzServices_po.SwaggerFailed()){
-                expect(jazzServices_po.SwaggerFailed().getText()).toEqual('Failed test');
-              }else if (jazzServices_po.getAPIGET()){
-                expect(jazzServices_po.getAPIGET().getText()).toEqual('Failed');
-              }else {
-                browser.sleep(twentyk);
-                browser.close();
-              }
-          });
-  
-          browser.close();
+          browser.driver.sleep(tenk);
+        commonUtils.fluentwaittry(jazzServices_po.getAPIGET(), fifteenk);
+        jazzServices_po.getAPIGET().click().then(null,function(err){
+          console.log("Swagger Page is Failed to upload : "+ err.name);
+        });    
+        browser.sleep(twok);
+        jazzServices_po.getTryOut().click().then(null, function(err){
+          console.log(err.name);
         });
+        browser.sleep(twok);
+        jazzServices_po.getStringA().sendKeys('Testing').then(null, function(err){
+          console.log(err.name);
+        });
+        browser.sleep(twok);
+        jazzServices_po.getStringB().sendKeys('Jazz').then(null, function(err){
+          console.log(err.name);
+        });
+        browser.sleep(twok);
+        jazzServices_po.getExecute().click().then(null, function(err){
+          console.log(err.name);
+        });
+        browser.sleep(twok);
+        jazzServices_po.getAPIGET().click().then(null, function(err){
+          console.log(err.name);
+        });
+        browser.sleep(twok);
+        jazzServices_po.getAPIPOST().click().then(null, function(err){
+          console.log(err.name);
+        });
+        browser.sleep(twok);
+        jazzServices_po.getTryOut().click().then(null, function(err){
+          console.log(err.name);
+        });
+        browser.sleep(twok);
+        jazzServices_po.getExecute().click().then(null, function(err){
+          console.log(err.name);
+          if (jazzServices_po.SwaggerFailed()){
+            expect(jazzServices_po.SwaggerFailed().getText()).toEqual('Failed test');
+          }else if (jazzServices_po.getAPIGET()){
+            expect(jazzServices_po.getAPIGET().getText()).toEqual('GETT');
+          }else {
+            browser.sleep(twentyk);
+            browser.close();
+          }
+        });
+          browser.sleep(fivek);
+          browser.close();
+      });
         browser.switchTo().window(handles[0]).then(function () {
           browser.sleep(twok);
           commonUtils.refreshbutton(jazzServices_po.getMetrices(), fivek);
@@ -437,11 +427,11 @@ describe('Overview', () => {
     commonUtils.fluentwaittry(jazzServices_po.getMetrices(), fifteenk);
     jazzServices_po.getMetrices().click();
     commonUtils.waitForMetricsSpinner();
-
-    jazzServices_po.getMetricesCount().isDisplayed().then(null, function(err){
-      console.log(err.name);
-      expect(jazzServices_po.getAPIType(servicename).getText()).toEqual('Metrics count is Failed');
-    });
+    commonUtils.refreshbutton(jazzServices_po.getMetricesCount(), thirtyk);
+    // jazzServices_po.getMetricesCount().isDisplayed().then(null, function(err){
+    //   console.log(err.name);
+    //   expect(jazzServices_po.getAPIType(servicename).getText()).toEqual('Metrics count is Failed');
+    // });
     expect(jazzServices_po.getMetricesCount().getText()).toEqual('1');
     browser.refresh();
     browser.sleep(twok);
