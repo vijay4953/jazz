@@ -79,7 +79,8 @@ export class Jazz {
     return element(by.xpath('//div[@class="page-title-wrap hide-for-mobile"]/h1[@class="page-hdr bold-title"]'));
   }
   getProdName() {
-    return element(by.xpath('//div[@class="stage-title stageDisp" and contains(text(),"prod")]'))
+    return element(by.xpath('//div[1]/span[@title="deployment completed"]'))
+      // '//div[@class="stage-title stageDisp" and contains(text(),"prod")]'))
   }
   getProdHeader() {
     return element(by.xpath('//div[@class="servie-details-container"]/h1[@class="page-hdr bold-title relative" and contains(text(),"prod")]'));
