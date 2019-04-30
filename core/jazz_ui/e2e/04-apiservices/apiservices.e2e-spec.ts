@@ -307,7 +307,6 @@ describe('Overview', () => {
                 browser.sleep(Common.twentyk);
                 browser.close();
               });
-              //jazzServices_po.getGitLogout().click();
               browser.close();
             }
             else {
@@ -334,7 +333,21 @@ describe('Overview', () => {
         });
         browser.switchTo().window(handles[0]).then(function () {
           browser.sleep(Common.twok);
-          commonUtils.waitforservice(jazzServices_po.activeTestBranch(), Common.fifteenk);
+          //commonUtils.waitforservice(jazzServices_po.activeTestBranch(), Common.fifteenk);
+          browser.wait(function () {
+            browser.sleep(Common.sixtyk);
+            return jazzServices_po.activeTestBranch().isDisplayed()
+              .then(
+                function (text) {
+                  flag=1;
+                  return text;
+                },
+                function (error) {
+                  browser.refresh();
+                  flag=0;
+                  return false;
+                });
+            }, 240 * 1000); 
           jazzServices_po.activeTestBranch().click().
             then(null, function (err) {
             console.log("the error occurred is : " + err.name);
