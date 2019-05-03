@@ -22,8 +22,8 @@ import { Common } from '../common/commontest';
 describe('Overview', () => {
   let jazzServices_po: Jazz;
   let commonUtils: Common;
-  let flag = 1;
   let found = 1;
+  let flag = 1;
   const EC = protractor.ExpectedConditions;
   let winhandle;
   let servicename;
@@ -49,7 +49,7 @@ describe('Overview', () => {
     jazzServices_po.logoutIcon().click();
     jazzServices_po.logout().click();
   });
-  
+
 
   function createservice(servicename) {
     jazzServices_po.getServiceName().sendKeys(servicename);
@@ -60,16 +60,37 @@ describe('Overview', () => {
   function serviceapprover() {
     browser.driver.sleep(Common.fivek);
     jazzServices_po.getSubmit().click();
-    //commonUtils.elementPresent(jazzServices_po.getDone(), Common.tenk);
     jazzServices_po.getDone().click().then(null,function(err){
       flag = 0;
     });
     commonUtils.waitForSpinnerLogin();
   }
 
+  function waitforskiptest(ele, t) {
+    browser.manage().timeouts().implicitlyWait(0);
+    browser.wait(function () {
+      browser.sleep(t);
+      return ele.isDisplayed()
+        .then(
+          function (text) {
+            flag=1;
+            return text;
+          },
+          function (error) {
+            browser.refresh();
+            flag=0;
+            return false;
+          });
+      }, 240 * 1000);  
+  }
+
   it('Create API Service', function () {
       browser.driver.sleep(Common.fivek);
-      browser.wait(EC.visibilityOf(jazzServices_po.getCreateService()), Common.timeOutHigh);
+      browser.wait(EC.visibilityOf(jazzServices_po.getCreateService()), Common.timeOutHigh).then(null,function(err){
+        console.log(err);
+        flag = 0;
+        browser.refresh();
+      });
       browser.wait(EC.elementToBeClickable(jazzServices_po.getCreateService()), Common.timeOutHigh);
       //To create Service-API
       jazzServices_po.getCreateService().click();
@@ -84,21 +105,8 @@ describe('Overview', () => {
       expect(jazzServices_po.getService(servicename).getText()).toEqual(servicename);
       commonUtils.fluentwaittry(jazzServices_po.getAPIType(servicename), Common.tenk);
       expect(jazzServices_po.getAPIType(servicename).getText()).toEqual('api');
-      expect(jazzServices_po.getAPIStatus(servicename).getText()).toEqual('creation started');
-      browser.wait(function () {
-        browser.sleep(Common.sixtyk);
-        return jazzServices_po.serviceStatus(servicename).isDisplayed()
-          .then(
-            function (text) {
-              flag=1;
-              return text;
-            },
-            function (error) {
-              browser.refresh();
-              flag=0;
-              return false;
-            });
-        }, 240 * 1000);  
+      expect(jazzServices_po.getAPIStatus(servicename).getText()).toEqual('creation started'); 
+      waitforskiptest(jazzServices_po.serviceStatus(servicename), Common.sixtyk);
   });
 
   it('Verify API Service and Navigation', () => {
@@ -110,27 +118,8 @@ describe('Overview', () => {
       commonUtils.waitForSpinnerDisappear();
       commonUtils.fluentwaittry(jazzServices_po.getOverviewStatus(), Common.fivek);
       expect(jazzServices_po.getOverviewStatus().getText()).toEqual('OVERVIEW');
-      commonUtils.elementPresent(jazzServices_po.getServiceNameHeader(), Common.fivek);
-      //To get the corresponding environment[Prod]
-      // commonUtils.elementPresent(jazzServices_po.getProdName(), Common.fivek);
-      // jazzServices_po.getProdName().click().then(null,function(err){
-      //   console.error(err);
-      //   flag = 0;
-      // });
-      browser.wait(function () {
-        browser.sleep(Common.tenk);
-        return jazzServices_po.getProdName().isDisplayed()
-          .then(
-            function (text) {
-              flag=1;
-              return text;
-            },
-            function (error) {
-              browser.refresh();
-              flag=0;
-              return false;
-            });
-        }, 60 * 1000);  
+      commonUtils.elementPresent(jazzServices_po.getServiceNameHeader(), Common.fivek); 
+      waitforskiptest(jazzServices_po.getProdName(), Common.sixtyk);  
       jazzServices_po.getProdName().click();
       commonUtils.waitForSpinnerDisappear();
       commonUtils.elementPresent(jazzServices_po.getDeploymentStatus(), Common.tenk);
@@ -221,35 +210,15 @@ describe('Overview', () => {
   });
 
   it('Verify METRICS COUNT for API', () => {
-      browser.driver.sleep(Common.twok);
+      browser.sleep(Common.fivek);
       commonUtils.fluentwaittry(jazzServices_po.getMetrices(), Common.tenk);
       jazzServices_po.getMetrices().click();
       commonUtils.waitForMetricsSpinner();
-      //commonUtils.refreshbutton(jazzServices_po.getMetricesCount(), Common.Common.thirtyk);
-      // if(value == true){
-      //   found = 1;
-      // }
-      // else{
-      //   found = 0;
-      //}
+      browser.sleep(Common.tenk);
+      commonUtils.refreshbutton(jazzServices_po.getMetricesCount(),Common.fifteenk);
+      expect(jazzServices_po.getMetricesCount().getText()).toEqual('1');
       browser.sleep(Common.fivek);
-      // jazzServices_po.getMetricesCount().isDisplayed().then(null, function(err){
-      //     browser.sleep(Common.twentyk);
-      //     commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.fivek);
-      //     jazzServices_po.getServiceHomePage().click();
-      //   });
-
-      expect(jazzServices_po.getMetricesCount().getText()).toEqual('1').then(null, function(err){
-        browser.sleep(Common.tenk);
-        console.log(err);
-        console.log('%c Metrics count is not increased', 'background: #222; color: #bada55');
-        //commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.tenk);
-        jazzServices_po.getServiceHomePage().click();
-      });
-      browser.driver.switchTo().activeElement();
-      browser.refresh();
-      browser.sleep(Common.twok);
-      commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.fivek);
+      commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.fifteenk);
       jazzServices_po.getServiceHomePage().click();
   });
 
@@ -281,73 +250,96 @@ describe('Overview', () => {
               jazzServices_po.gitUsername().sendKeys(Common.config.SCM_USERNAME).then(null, function(err){
                 console.log(err.name); 
               });
+              browser.sleep(Common.twok);
               jazzServices_po.gitPassword().sendKeys(Common.config.SCM_PASSWORD).then(null, function(err){
                 console.log(err.name); 
               });
+              browser.sleep(Common.twok);
               jazzServices_po.gitLogin().click().then(null, function(err){
                 console.log(err.name); 
               });
+              browser.sleep(Common.twok);
               jazzServices_po.drpGitBranchType().click().then(null, function(err){
                 console.log(err.name); 
               });
+              browser.sleep(Common.twok);
               jazzServices_po.selectGitBranchType().click().then(null, function(err){
                 console.log(err.name); 
               });
+              browser.sleep(Common.twok);
               jazzServices_po.gitBranchName().sendKeys(test).then(null, function(err){
                 console.log(err.name); 
               });
+              browser.sleep(Common.twok);
               jazzServices_po.btnGitCreateBranch().click().then(null, function(err){
                 console.log(err.name); 
               });
+              browser.sleep(Common.twok);
               jazzServices_po.getGitLogoutIcon().click().then(null, function(err){
                 console.log(err.name); 
               });
+              browser.sleep(Common.twok);
               jazzServices_po.getGitLogout().click().then(null, function(err){
                 console.log(err.name); 
+                flag = 0;
                 browser.sleep(Common.twentyk);
                 browser.close();
               });
+              browser.sleep(Common.twok);
               browser.close();
             }
             else {
               expect(webpagetitle).not.toEqual('Sign in · GitLab');
-              jazzServices_po.bitUsername().sendKeys(Common.config.SCM_USERNAME);
-              jazzServices_po.bitPassword().sendKeys(Common.config.SCM_PASSWORD);
-              jazzServices_po.bitLogin().click();
-              browser.wait(EC.visibilityOf(jazzServices_po.createBranch()), Common.timeOutHigh);
-              jazzServices_po.createBranch().click();
-              jazzServices_po.drp_BranchType().click();
-              jazzServices_po.select_BranchType().click();
+              jazzServices_po.bitUsername().sendKeys(Common.config.SCM_USERNAME).then(null, function(err){
+                console.log(err.name); 
+              });
               browser.sleep(Common.twok);
-              jazzServices_po.branchName().sendKeys(test);
-              browser.wait(EC.elementToBeClickable(jazzServices_po.btn_CreateBranch()), Common.timeOutHigh);
-              jazzServices_po.btn_CreateBranch().click();
-              browser.sleep(Common.tenk);
-              browser.navigate().refresh();
+              jazzServices_po.bitPassword().sendKeys(Common.config.SCM_PASSWORD).then(null, function(err){
+                console.log(err.name); 
+              });
               browser.sleep(Common.twok);
-              jazzServices_po.getBitLogoutIcon().click();
-              jazzServices_po.getBitLogout().click();
+              jazzServices_po.bitLogin().click().then(null, function(err){
+                console.log(err.name); 
+              });
+              browser.sleep(Common.twok);
+              jazzServices_po.createBranch().click().then(null, function(err){
+                console.log(err.name); 
+              });
+              browser.sleep(Common.twok);
+              jazzServices_po.drp_BranchType().click().then(null, function(err){
+                console.log(err.name); 
+              });
+              browser.sleep(Common.twok);
+              jazzServices_po.select_BranchType().click().then(null, function(err){
+                console.log(err.name); 
+              });
+              browser.sleep(Common.twok);
+              jazzServices_po.branchName().sendKeys(test).then(null, function(err){
+                console.log(err.name); 
+              });
+              browser.sleep(Common.twok);
+              jazzServices_po.btn_CreateBranch().click().then(null, function(err){
+                console.log(err.name); 
+              });
+              browser.sleep(Common.twok);
+              jazzServices_po.getBitLogoutIcon().click().then(null, function(err){
+                console.log(err.name); 
+              });
+              browser.sleep(Common.twok);
+              jazzServices_po.getBitLogout().click().then(null, function(err){
+                console.log(err.name); 
+                flag = 0;
+                browser.sleep(Common.twentyk);
+                browser.close(); 
+              });
+              browser.sleep(Common.twok);
               browser.close();
             }
           });
         });
         browser.switchTo().window(handles[0]).then(function () {
-          browser.sleep(Common.twok);
-          //commonUtils.waitforservice(jazzServices_po.activeTestBranch(), Common.fifteenk);
-          browser.wait(function () {
-            browser.sleep(Common.sixtyk);
-            return jazzServices_po.activeTestBranch().isDisplayed()
-              .then(
-                function (text) {
-                  flag=1;
-                  return text;
-                },
-                function (error) {
-                  browser.refresh();
-                  flag=0;
-                  return false;
-                });
-            }, 240 * 1000); 
+          browser.sleep(Common.twok); 
+          waitforskiptest(jazzServices_po.activeTestBranch(), Common.sixtyk);
           jazzServices_po.activeTestBranch().click().
             then(null, function (err) {
             console.log("the error occurred is : " + err.name);
@@ -414,24 +406,10 @@ describe('Overview', () => {
           browser.close();
       });
         browser.switchTo().window(handles[0]).then(function () {
-          browser.sleep(Common.twok);
-          commonUtils.refreshbutton(jazzServices_po.getMetrices(), Common.fivek);
+          browser.sleep(Common.fivek);
+          commonUtils.elementPresent(jazzServices_po.getMetrices(), Common.fivek);
           jazzServices_po.getMetrices().click();
           commonUtils.waitForMetricsSpinner();
-          commonUtils.refreshbutton(jazzServices_po.getXXError(), Common.tenk);
-          jazzServices_po.getXXError().click();
-          commonUtils.refreshbutton(jazzServices_po.getXXErrorFive(), Common.tenk);
-          jazzServices_po.getXXErrorFive().click();
-          browser.wait(EC.visibilityOf(jazzServices_po.getCacheHitCount()), Common.timeOutHigh);
-          jazzServices_po.getCacheHitCount().click();
-          browser.wait(EC.visibilityOf(jazzServices_po.getCacheMissCount()), Common.timeOutHigh);
-          jazzServices_po.getCacheMissCount().click();
-          browser.wait(EC.visibilityOf(jazzServices_po.getCount()), Common.timeOutHigh);
-          jazzServices_po.getCount().click();
-          browser.wait(EC.visibilityOf(jazzServices_po.getIntegrationLatency()), Common.timeOutHigh);
-          jazzServices_po.getIntegrationLatency().click();
-          browser.wait(EC.visibilityOf(jazzServices_po.getLatency()), Common.timeOutHigh);
-          jazzServices_po.getLatency().click();
         });
       });
   });
@@ -452,15 +430,14 @@ describe('Overview', () => {
     commonUtils.fluentwaittry(jazzServices_po.getMetrices(), Common.fifteenk);
     jazzServices_po.getMetrices().click();
     commonUtils.waitForMetricsSpinner();
-    //commonUtils.refreshbutton(jazzServices_po.getMetricesCount(), Common.Common.thirtyk);
     browser.sleep(Common.fivek);
-    jazzServices_po.getMetricesCount().isDisplayed().then(null, function(err){
-      console.log(err.name);
-      commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.fivek);
-      jazzServices_po.getServiceHomePage().click();
-    });
+    // jazzServices_po.getMetricesCount().isPresent().then(null, function(err){
+    //   console.log(err.name);
+    //   commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.fivek);
+    //   jazzServices_po.getServiceHomePage().click();
+    // });
+    commonUtils.refreshbutton(jazzServices_po.getMetricesCount(),Common.fifteenk);
     expect(jazzServices_po.getMetricesCount().getText()).toEqual('1');
-    browser.refresh();
     browser.sleep(Common.twok);
     commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.fivek);
     jazzServices_po.getServiceHomePage().click();

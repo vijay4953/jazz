@@ -19,17 +19,15 @@ const config = CONFIGURATIONS.optional.general.e2e;
 import { Jazz } from '../page-objects/jazzservices.po';
 import { Login } from '../page-objects/login.po';
 
-
 let servicename;
-
 let jazzServices_po: Jazz;
 jazzServices_po = new Jazz();
 
 let login_po: Login;
 login_po = new Login();
 
+
 export class Common {
-  
   public static readonly emailId = CONFIGURATIONS.optional.general.e2e.EMAIL_ID;
   public static readonly config = CONFIGURATIONS.optional.general.e2e;
   public static readonly timeOutHigh = 180000;
@@ -51,6 +49,7 @@ export class Common {
   waitForMetricsSpinner() {
     browser.wait(Common.EC.not(Common.EC.visibilityOf(jazzServices_po.getMetricsSpinner())), 180000);
   }
+
   waitforservice(ele, t) {
     browser.manage().timeouts().implicitlyWait(0);
     browser.wait(function () {
@@ -187,3 +186,4 @@ export class Common {
       }
   }
 }
+let commonUtils = new Common();

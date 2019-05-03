@@ -63,10 +63,32 @@ describe('Overview', () => {
   jazzServices_po.getDone().click();
  }
 
+ function waitforskiptest(ele, t) {
+  browser.manage().timeouts().implicitlyWait(0);
+  browser.wait(function () {
+    browser.sleep(t);
+    return ele.isDisplayed()
+      .then(
+        function (text) {
+          flag=1;
+          return text;
+        },
+        function (error) {
+          browser.refresh();
+          flag=0;
+          return false;
+        });
+    }, 240 * 1000);  
+}
+
  it('Create Lambda Service', () => {
    browser.driver.switchTo().activeElement();
    browser.driver.sleep(Common.fivek);
-   browser.wait(EC.visibilityOf(jazzServices_po.getCreateService()), Common.timeOutHigh);
+   browser.wait(EC.visibilityOf(jazzServices_po.getCreateService()), Common.timeOutHigh).then(null,function(err){
+    console.log(err);
+    flag = 0;
+    browser.refresh();
+  });
    browser.wait(EC.elementToBeClickable(jazzServices_po.getCreateService()), Common.timeOutHigh);
    jazzServices_po.getCreateService().click();
    browser.driver.switchTo().activeElement();
@@ -85,36 +107,24 @@ describe('Overview', () => {
    expect(jazzServices_po.getService(servicename).getText()).toEqual(servicename);
    expect(jazzServices_po.getFunctionType(servicename).getText()).toEqual('function');
    expect(jazzServices_po.getFunctionStatus(servicename).getText()).toEqual('creation started');
-   //commonUtils.waitforservice(jazzServices_po.serviceStatus(servicename), Common.sixtyk);
-      //expect(jazzServices_po.serviceStatus(servicename).getText()).toEqual('active');
-
-      // jazzServices_po.serviceStatus(servicename).getText().then(function (service) {
-      //   console.log("Service is :" + service)
-        // if (result) {
-        //   console.log("pass"+result);
-        //   flag = 1;
-        // } else{
-        //   console.log("fail"+result);
-        //   flag = 0;
-        // }
-   //expect(jazzServices_po.serviceStatus(servicename).getText()).toEqual('active');
-
-    browser.wait(function () {
-      browser.sleep(Common.sixtyk);
-      return jazzServices_po.serviceStatus(servicename).isDisplayed()
-        .then(
-          function (text) {
-            console.log( "Test is :"+ text);
-            flag=1;
-            return text;
-          },
-          function (error) {
-            browser.refresh();
-            console.error(" Error :" + error );
-            flag=0;
-            return false;
-          });
-      }, 240 * 1000);
+  
+    // browser.wait(function () {
+    //   browser.sleep(Common.sixtyk);
+    //   return jazzServices_po.serviceStatus(servicename).isDisplayed()
+    //     .then(
+    //       function (text) {
+    //         console.log( "Test is :"+ text);
+    //         flag=1;
+    //         return text;
+    //       },
+    //       function (error) {
+    //         browser.refresh();
+    //         console.error(" Error :" + error );
+    //         flag=0;
+    //         return false;
+    //       });
+    //   }, 240 * 1000);
+    waitforskiptest(jazzServices_po.serviceStatus(servicename), Common.sixtyk);
 
  });
 
@@ -129,20 +139,21 @@ describe('Overview', () => {
    //browser.wait(EC.visibilityOf(jazzServices_po.getServiceNameHeader()), Common.timeOutHigh);
    //To get the corresponding environment[Prod]
    //commonUtils.elementPresent(jazzServices_po.getProdName(), Common.fivek);
-   browser.wait(function () {
-    browser.sleep(Common.tenk);
-    return jazzServices_po.getProdName().isDisplayed()
-      .then(
-        function (text) {
-          flag=1;
-          return text;
-        },
-        function (error) {
-          browser.refresh();
-          flag=0;
-          return false;
-        });
-    }, 60 * 1000);
+  //  browser.wait(function () {
+  //   browser.sleep(Common.tenk);
+  //   return jazzServices_po.getProdName().isDisplayed()
+  //     .then(
+  //       function (text) {
+  //         flag=1;
+  //         return text;
+  //       },
+  //       function (error) {
+  //         browser.refresh();
+  //         flag=0;
+  //         return false;
+  //       });
+  //   }, 60 * 1000);
+   waitforskiptest(jazzServices_po.getProdName(), Common.thirtyk);
    jazzServices_po.getProdName().click();
    commonUtils.waitForSpinnerDisappear();
    commonUtils.refreshbutton(jazzServices_po.getDeploymentStatus(), Common.fivek);
@@ -272,30 +283,58 @@ describe('Overview', () => {
         });
         jazzServices_po.getGitLogout().click().then(null, function(err){
           console.log(err.name); 
+          flag = 0;
           browser.sleep(Common.twentyk);
           browser.close();
         });
         browser.close();
       }
       else {
-       expect(webpagetitle).not.toEqual('Sign in · GitLab');
-       jazzServices_po.bitUsername().sendKeys(Common.config.SCM_USERNAME);
-       jazzServices_po.bitPassword().sendKeys(Common.config.SCM_PASSWORD);
-       jazzServices_po.bitLogin().click();
-       browser.wait(EC.visibilityOf(jazzServices_po.createBranch()), Common.timeOutHigh);
-       jazzServices_po.createBranch().click();
-       jazzServices_po.drp_BranchType().click();
-       jazzServices_po.select_BranchType().click();
-       browser.sleep(Common.twok);
-       jazzServices_po.branchName().sendKeys(test);
-       browser.wait(EC.elementToBeClickable(jazzServices_po.btn_CreateBranch()), Common.timeOutHigh);
-       jazzServices_po.btn_CreateBranch().click();
-       browser.sleep(Common.tenk);
-       browser.navigate().refresh();
-       browser.sleep(Common.twok);
-       jazzServices_po.getBitLogoutIcon().click();
-       jazzServices_po.getBitLogout().click();
-       browser.close();
+      expect(webpagetitle).not.toEqual('Sign in · GitLab');
+      jazzServices_po.bitUsername().sendKeys(Common.config.SCM_USERNAME).then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.bitPassword().sendKeys(Common.config.SCM_PASSWORD).then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.bitLogin().click().then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.createBranch().click().then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.drp_BranchType().click().then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.select_BranchType().click().then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.branchName().sendKeys(test).then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.btn_CreateBranch().click().then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.getBitLogoutIcon().click().then(null, function(err){
+        console.log(err.name); 
+      });
+      browser.sleep(Common.twok);
+      jazzServices_po.getBitLogout().click().then(null, function(err){
+        console.log(err.name); 
+        flag = 0;
+        browser.sleep(Common.twentyk);
+        browser.close(); 
+      });
+        browser.sleep(Common.twok);
+        browser.close();
       }
      });
     });
@@ -303,20 +342,21 @@ describe('Overview', () => {
     browser.switchTo().window(handles[0]).then(function () {
      browser.sleep(Common.twok);
      //commonUtils.waitforservice(jazzServices_po.activeTestBranch(), Common.fifteenk);
-     browser.wait(function () {
-      browser.sleep(Common.sixtyk);
-      return jazzServices_po.activeTestBranch().isDisplayed()
-        .then(
-          function (text) {
-            flag=1;
-            return text;
-          },
-          function (error) {
-            browser.refresh();
-            flag=0;
-            return false;
-          });
-      }, 240 * 1000);
+    //  browser.wait(function () {
+    //   browser.sleep(Common.sixtyk);
+    //   return jazzServices_po.activeTestBranch().isDisplayed()
+    //     .then(
+    //       function (text) {
+    //         flag=1;
+    //         return text;
+    //       },
+    //       function (error) {
+    //         browser.refresh();
+    //         flag=0;
+    //         return false;
+    //       });
+    //   }, 240 * 1000);
+      waitforskiptest(jazzServices_po.activeTestBranch(), Common.sixtyk);
      jazzServices_po.activeTestBranch().click().
       then(null, function (err) {
        console.log("the error occurred is : " + err.name);
