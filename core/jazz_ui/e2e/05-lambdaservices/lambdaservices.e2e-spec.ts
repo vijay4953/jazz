@@ -348,8 +348,6 @@ describe('Overview', () => {
     commonUtils.refreshbutton(jazzServices_po.getMetricesCount(), Common.shortWait);
     expect(jazzServices_po.getMetricesCount().getText()).not.toEqual('-');
     browser.sleep(Common.microWait);
-    commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.miniWait);
-    jazzServices_po.getServiceHomePage().click();
   });
 });
 

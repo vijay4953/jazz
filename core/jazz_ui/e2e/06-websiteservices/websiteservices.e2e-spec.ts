@@ -35,6 +35,9 @@ describe('Overview', () => {
     browser.driver.sleep(Common.miniWait);
     commonUtils.Login();
   });
+  afterAll(() => {
+    browser.close();
+  });
   beforeEach(() => {
     if (flag == 0) {
       pending();
@@ -341,8 +344,6 @@ describe('Overview', () => {
     //commonUtils.refreshbutton(jazzServices_po.getMetricesRequestCount(),Common.miniWait);
     //expect(jazzServices_po.getMetricesRequestCount().getText()).toEqual('10');  
     browser.sleep(Common.microWait);
-    commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.miniWait);
-    jazzServices_po.getServiceHomePage().click();
   });
 });
 
