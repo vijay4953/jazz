@@ -107,7 +107,7 @@ export class Jazz {
     return element(by.xpath('//div[contains(text(),"successful")]'));
   }
   getAssetStatusVerify() {
-    return element(by.xpath('//div/div[1]/div[2]/div/div[2]/ul[1]/li[1]/div[2]'));
+    return element(by.css('div.asset-content-row.row ul.section-left.col-md-6.col-sm-12 li:nth-child(1) > div.det-value'));
   }
   getLamdaName() {
     return element(by.xpath('//div[@class="table-row pointer"]/div[text()="function"]/preceding-sibling::div'));
@@ -409,5 +409,37 @@ export class Jazz {
   testError() {
     return element(by.xpath('//*[@id="main-message"]/h1/span'));  
   }
+  getBuildCustom() { 
+    return element(by.xpath('//div[@class="icon-icon-sls-app"]//img'));  
+    }
+
+  accountSelect() { 
+    return element(by.xpath('//div[contains(@class,"each-section-accReg")]//button[contains(@class,"btn dropdown-btn dropdown-toggle")]'));  
+    }
+  regionSelect() { 
+    return element(by.xpath('//*[@id="typeform"]/section[4]/div/div[2]/section/div/div[2]/div[2]/dropdown/div/button'));  
+    }
+  firstAccount() { 
+    return element(by.xpath('//section[4]/div/div[2]/section/div/div[1]/div[2]/dropdown/div/ul/li[1]/a'));  
+    }
+  secountAccount() { 
+    return element(by.xpath('//section[4]/div[1]/div[2]/section[1]/div[1]/div[1]/div[2]/dropdown[1]/div[1]/ul[1]/li[2]/a[1]'));  
+    }
+  eastRegion() { 
+    return element(by.xpath('//a[contains(text(),"us-east-1")]'));  
+    }
+  westRegion() { 
+    return element(by.xpath('//a[contains(text(),"us-west-2")]'));  
+    }
+
+  deployDesciptor() { 
+    return element(by.xpath('//section[@id="deployment-descriptor"]//label'));  
+    }
+  eastRegionVerify() { 
+    return element(by.xpath('//div[contains(text(),"us-east-1")]'));  
+    }
+  westRegionVerify() { 
+    return element(by.xpath('//div[contains(text(),"us-west-2")]'));  
+    }
 
 }

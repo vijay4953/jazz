@@ -86,10 +86,10 @@ describe('Overview', () => {
     browser.driver.sleep(Common.miniWait);
     //Creating Website
     jazzServices_po.getWebsite().click();
-    var min = 111111111;
-    var max = 999999999;
+    var min = 111111;
+    var max = 999999;
     var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    servicename = 'servicename' + randomNum;
+    servicename = 'website' + randomNum;
     createservice(servicename);
     serviceapprover();
     browser.driver.sleep(Common.mediumWait);
