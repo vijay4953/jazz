@@ -18,7 +18,6 @@ import { Timeouts, Browser } from 'selenium-webdriver';
 import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG, SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 import { Common } from '../common/commontest';
 
-
 describe('Overview', () => {
   let jazzServices_po: Jazz;
   let commonUtils: Common;
@@ -31,14 +30,15 @@ describe('Overview', () => {
   beforeAll(() => {
     jazzServices_po = new Jazz();
     commonUtils = new Common();
+    browser.driver.sleep(Common.miniWait);
+    commonUtils.Login();
   });
   beforeEach(() => {
     if (flag == 0) {
       pending();
     }
     if (found == 0) {
-      commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.shortWait);
-      jazzServices_po.getServiceHomePage().click();
+      pending();
     }
   });
   afterAll(() => {
@@ -49,7 +49,6 @@ describe('Overview', () => {
     jazzServices_po.logout().click();
   });
 
-
   function createservice(servicename) {
     jazzServices_po.getServiceName().sendKeys(servicename);
     jazzServices_po.getNameSpace().sendKeys('jazztest');
@@ -59,10 +58,8 @@ describe('Overview', () => {
   function serviceapprover() {
     browser.driver.sleep(Common.miniWait);
     jazzServices_po.getSubmit().click();
-    jazzServices_po.getDone().click().then(null, function (err) {
-      flag = 0;
-    });
-    commonUtils.waitForSpinnerLogin();
+    commonUtils.fluentwaittry(jazzServices_po.getDone(), Common.shortWait);
+    jazzServices_po.getDone().click();
   }
 
   function waitforskiptest(ele, t) {
@@ -80,10 +77,10 @@ describe('Overview', () => {
             flag = 0;
             return false;
           });
-    }, 240 * 1000);
+    }, 300 * 1000);
   }
 
-  it('Create API Service', function () {
+  it('Create Service for second account with east region', function () {
     browser.driver.sleep(Common.miniWait);
     browser.wait(EC.visibilityOf(jazzServices_po.getCreateService()), Common.timeOutHigh).then(null, function (err) {
       console.log(err);
@@ -91,13 +88,21 @@ describe('Overview', () => {
       browser.refresh();
     });
     browser.wait(EC.elementToBeClickable(jazzServices_po.getCreateService()), Common.timeOutHigh);
-    //To create Service-API
     jazzServices_po.getCreateService().click();
-    var min = 111111111;
-    var max = 999999999;
+    browser.driver.switchTo().activeElement();
+    var min = 111111;
+    var max = 999999;
     var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    servicename = 'api' + randomNum;
+    servicename = 'secondeast' + randomNum;
+    // First Account with east Region
     createservice(servicename);
+    jazzServices_po.accountSelect().click();
+    jazzServices_po.secountAccount().click().then(null, function (err) {
+      console.log(err);
+      flag = 0;
+    });;
+    jazzServices_po.regionSelect().click();
+    jazzServices_po.eastRegion().click();
     serviceapprover();
     browser.driver.sleep(Common.mediumWait);
     //Assert-Verifying the created service,Type and Status of the API
@@ -108,16 +113,14 @@ describe('Overview', () => {
     waitforskiptest(jazzServices_po.serviceStatus(servicename), Common.xxlWait);
   });
 
-  it('Verify API Service and Navigation', () => {
+  it('Verify Service and Navigation for second account with east region', () => {
     browser.driver.sleep(Common.microWait);
     commonUtils.fluentwaittry(jazzServices_po.getService(servicename), Common.miniWait);
     browser.wait(EC.elementToBeClickable(jazzServices_po.getService(servicename)), Common.timeOutHigh);
     //To Navigate to the particular service and verifying the Page
     jazzServices_po.getService(servicename).click();
     commonUtils.waitForSpinnerDisappear();
-    commonUtils.fluentwaittry(jazzServices_po.getOverviewStatus(), Common.miniWait);
-    expect(jazzServices_po.getOverviewStatus().getText()).toEqual('OVERVIEW');
-    commonUtils.elementPresent(jazzServices_po.getServiceNameHeader(), Common.miniWait);
+    expect(jazzServices_po.eastRegionVerify().getText()).toEqual('us-east-1');
     waitforskiptest(jazzServices_po.getProdName(), Common.xxlWait);
     jazzServices_po.getProdName().click();
     commonUtils.waitForSpinnerDisappear();
@@ -127,7 +130,7 @@ describe('Overview', () => {
     browser.driver.switchTo().activeElement();
   });
 
-  it('Verify METRICS Navigation for API', () => {
+  it('Verify METRICS Navigation for second account with east region', () => {
     browser.sleep(Common.microWait);
     jazzServices_po.getTestAPI().click().then(null, function (err) {
       console.log("the error occurred is : " + err.name);
@@ -194,21 +197,21 @@ describe('Overview', () => {
     });
   });
 
-  it('Verify API Deployments', () => {
+  it('Verify Deployment for second account with east region', () => {
     commonUtils.verifyDelpoyment();
   });
 
-  it('Verify API Asset', () => {
+  it('Verify Asset for second account with east region', () => {
     commonUtils.verifyAsset();
 
   });
 
-  it('Verify API Logs', () => {
+  it('Verify Logs for second account with east region', () => {
     commonUtils.verifyLogs();
 
   });
 
-  it('Verify METRICS COUNT for API', () => {
+  it('Verify METRICS COUNT for second account with east region', () => {
     browser.sleep(Common.miniWait);
     commonUtils.fluentwaittry(jazzServices_po.getMetrices(), Common.shortWait);
     jazzServices_po.getMetrices().click();
@@ -216,13 +219,14 @@ describe('Overview', () => {
     browser.sleep(Common.shortWait);
     commonUtils.refreshbutton(jazzServices_po.getMetricesCount(), Common.mediumWait);
     expect(jazzServices_po.getMetricesCount().getText()).toEqual('1');
-    browser.sleep(Common.miniWait);
+
   });
 
-  it('Identifying Environment and Navigation for API', () => {
+  it('Identifying Environment and Navigation for second account with east region', () => {
     browser.driver.sleep(Common.microWait);
     commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.mediumWait);
     jazzServices_po.getServiceHomePage().click();
+    browser.driver.sleep(Common.microWait);
     commonUtils.fluentwaittry(jazzServices_po.getService(servicename), Common.miniWait);
     browser.wait(EC.elementToBeClickable(jazzServices_po.getService(servicename)), Common.timeOutHigh);
     //To Navigate to the particular service and verifying the Page
@@ -233,7 +237,7 @@ describe('Overview', () => {
     browser.sleep(Common.miniWait);
   });
 
-  it('Create the Test Branch for API', () => {
+  it('Create the Test Branch for second account with east region', () => {
     browser.getAllWindowHandles().then(function (handles) {
       browser.sleep(Common.microWait);
       var min = 11;
@@ -349,7 +353,7 @@ describe('Overview', () => {
     });
   });
 
-  it('Verify METRICS Navigation for API Test Branch', () => {
+  it('Verify METRICS Navigation Test Branch for second account with east region', () => {
     commonUtils.fluentwaittry(jazzServices_po.getTestAPI(), Common.mediumWait);
     expect(jazzServices_po.getTestAPI().getText()).toEqual('TEST API');
     browser.wait(EC.elementToBeClickable(jazzServices_po.getTestAPI()), Common.timeOutHigh);
@@ -412,34 +416,28 @@ describe('Overview', () => {
       });
     });
   });
-  it('Verify API Deployments for Test Branch', () => {
+  it('Verify Deployments for Test Branch for second account with east region', () => {
     commonUtils.verifyDelpoyment();
   });
 
-  it('Verify API Asset for Test Branch', () => {
+  it('Verify Asset for Test Branch for second account with east region', () => {
     commonUtils.verifyAsset();
   });
 
-  it('Verify API Logs for Test Branch', () => {
+  it('Verify Logs for Test Branch for second account with east region', () => {
     commonUtils.verifyLogs();
   });
 
-  it('Verify METRICS COUNT for API for Test Branch', () => {
+  it('Verify METRICS COUNT Test Branch for second account with east region', () => {
     browser.driver.sleep(Common.microWait);
     commonUtils.fluentwaittry(jazzServices_po.getMetrices(), Common.mediumWait);
     jazzServices_po.getMetrices().click();
     commonUtils.waitForMetricsSpinner();
     browser.sleep(Common.miniWait);
-    // jazzServices_po.getMetricesCount().isPresent().then(null, function(err){
-    //   console.log(err.name);
-    //   commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.miniWait);
-    //   jazzServices_po.getServiceHomePage().click();
-    // });
     commonUtils.refreshbutton(jazzServices_po.getMetricesCount(), Common.mediumWait);
     expect(jazzServices_po.getMetricesCount().getText()).toEqual('1');
     browser.sleep(Common.microWait);
-    commonUtils.fluentwaittry(jazzServices_po.getServiceHomePage(), Common.miniWait);
-    jazzServices_po.getServiceHomePage().click();
   });
 
 });
+
